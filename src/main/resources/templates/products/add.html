@@ -17,13 +17,25 @@
                         <input type="text" class="form-control" id="tensanpham" placeholder="Tên sản phẩm" th:field="*{name}">
                     </div>
                     <div class="form-group">
-                        <label for="giasanpham">Gía sản phẩm</label>
+                        <label for="giasanpham">Giá sản phẩm</label>
                         <input type="number" class="form-control" id="giasanpham" placeholder="Giá sản phẩm"  th:field="*{price}">
                     </div>
                     <div class="form-group">
                         <label for="loaisanpham">Loại sản phẩm</label>
                         <select class="form-control" id="loaisanpham" th:field="*{category}">
                             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nhasanxuat">Nhà sản xuất</label>
+                        <select class="form-control" id="nhasanxuat" th:field="*{manufacturer}">
+                            <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="thuonghieu">Thương hiệu</label>
+                        <select class="form-control" id="thuonghieu" th:field="*{brand}">
+                            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Thêm</button>

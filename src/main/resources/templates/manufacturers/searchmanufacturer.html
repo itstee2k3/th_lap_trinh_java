@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="_layout :: head">
+    <title></title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Mã nhà sản xuất</th>
+        <th scope="col">Tên nhà sản xuất</th>
+        <th scope="col">Địa chỉ</th>
+    </tr>
+    </thead>
+    <tbody th:each="manufacturer : ${listManufacturer}">
+    <tr>
+        <td th:text="${manufacturer.id}"></td>
+        <td th:text="${manufacturer.name}"></td>
+        <td th:text="${manufacturer.address}"></td>
+        <td><a class="btn btn-success" th:href="@{/manufacturers/edit(id=${manufacturer.id})}">Edit</a>
+            <a class="btn btn-warning" th:href="@{/manufacturers/delete(id=${manufacturer.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

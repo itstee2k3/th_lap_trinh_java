@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="_layout :: head">
-    <title>List Product</title>
+    <title>List Manufacturer</title>
 </head>
 <body>
 <div id="wrapper">
@@ -11,33 +11,27 @@
             <div th:replace="~{_layout :: nav-top}"></div>
             <div class="container-fluid">
                 <div class="input-group m-1">
-                    <a th:href="@{/products/add}" class="btn btn-primary">Thêm mới sản phẩm</a>
+                    <a class="btn btn-primary" th:href="@{/manufacturers/add}">Add new manufacturer</a>
                     <div class="form-outline w-25" data-mdb-input-init>
-                        <input type="search" id="search-input" class="form-control ml-2" placeholder="Nhập tên sản phẩm cần tìm"/>
+                        <input type="search" id="search-input" class="form-control ml-2" placeholder="Nhập tên nhà sản xuất cần tìm"/>
                     </div>
                 </div>
                 <div id="content-display">
-                    <table id="myTable" class="table">
+                    <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Mã sản phẩm</th>
-                            <th scope="col">Tên sản phẩm</th>
-                            <th scope="col">Giá sản phẩm</th>
-                            <th scope="col">Danh mục sản phẩm</th>
-                            <th scope="col">Nhà sản xuất</th>
-                            <th scope="col">Thương hiệu</th>
+                            <th scope="col">Mã nhà sản xuất</th>
+                            <th scope="col">Tên nhà sản xuất</th>
+                            <th scope="col">Địa chỉ</th>
                         </tr>
                         </thead>
-                        <tbody th:each="product : ${listProduct}">
+                        <tbody th:each="manufacturer : ${listManufacturer}">
                         <tr>
-                            <td th:text="${product.id}"></td>
-                            <td th:text="${product.name}"></td>
-                            <td th:text="${product.price}"></td>
-                            <td th:text="${product.category.name}"></td>
-                            <td th:text="${product.manufacturer.name}"></td>
-                            <td th:text="${product.brand.name}"></td>
-                            <td><a class="btn btn-success" th:href="@{/products/edit(id=${product.id})}">Edit</a>
-                                <a class="btn btn-warning" th:href="@{/products/delete(id=${product.id})}">Delete</a>
+                            <td th:text="${manufacturer.id}"></td>
+                            <td th:text="${manufacturer.name}"></td>
+                            <td th:text="${manufacturer.address}"></td>
+                            <td><a class="btn btn-success" th:href="@{/manufacturers/edit(id=${manufacturer.id})}">Edit</a>
+                                <a class="btn btn-warning" th:href="@{/manufacturers/delete(id=${manufacturer.id})}">Delete</a>
                             </td>
                         </tr>
                         </tbody>
@@ -49,13 +43,14 @@
     </div>
 </div>
 <div th:replace="~{_layout :: script_src}"></div>
+
 <script type="text/javascript">
     $(document).ready(function (){
         const searchBar = document.getElementById("search-input");
         searchBar.addEventListener("change", function (){
             let value = searchBar.value;
             $.ajax({
-                url: "/products/searchbook",
+                url: "/manufacturers/searmanufacturer",
                 data: {name: value},
                 type: "GET",
                 success: function (data){

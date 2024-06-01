@@ -24,7 +24,7 @@ public class CategoryController {
     }
 
     @GetMapping("/add")
-    public String addProduct(Model model){
+    public String addCategory(Model model){
         model.addAttribute("category", new Category());
         return "categories/add";
     }
@@ -57,8 +57,8 @@ public class CategoryController {
         return "categories/delete";
     }
     @PostMapping("/delete")
-    public String confirmDelete (Product product, Model model){
-        categoryService.DeleteCategory(product.getId());
+    public String confirmDelete (Category category, Model model){
+        categoryService.DeleteCategory(category.getId());
         model.addAttribute("listCategory", categoryService.getList());
         return "redirect:/categories/listcategory";
     }

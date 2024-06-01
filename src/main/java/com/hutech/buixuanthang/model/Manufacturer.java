@@ -8,11 +8,15 @@ import lombok.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "manufacturers")
+public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Tên là bắt buộc")
     private String name;
+
+    @NotBlank(message = "Địa chỉ là bắt buộc")
+    private String address;
 }
