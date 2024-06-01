@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="_layout :: head">
+    <title>Delete Category</title>
+</head>
+<body>
+<div id="wrapper">
+    <div th:replace="~{_layout :: menu}"></div>
+    <div id="content-wrapper">
+        <div id="content">
+            <div th:replace="~{_layout :: nav-top}"></div>
+            <div class="container-fluid">
+                <h3 class="title">Delete category</h3>
+                <form th:action="@{/categories/delete}" th:object="${category}" method="post" >
+                    <div class="form-group">
+                        <label for="maloai">Mã loại</label>
+                        <input type="number" class="form-control" id="maloai" placeholder="Tên loại sản phẩm" th:field="*{id}" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="tenloai">Tên loại</label>
+                        <input type="text" class="form-control" id="tenloai" placeholder="Tên loại sản phẩm" th:field="*{name}" required readonly>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Xóa"/>
+                    <a class="btn btn-info" th:href="@{/categories/listcategory}">Back</a>
+                </form>
+            </div>
+        </div>
+        <div th:replace="~{_layout :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{_layout :: script_src}"></div>
+</body>
+</html>

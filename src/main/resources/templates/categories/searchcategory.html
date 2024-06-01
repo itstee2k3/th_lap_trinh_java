@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="_layout :: head">
+    <title></title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Mã loại</th>
+        <th scope="col">Tên loại</th>
+    </tr>
+    </thead>
+    <tbody th:each="category : ${listCategory}">
+    <tr>
+        <td th:text="${category.id}"></td>
+        <td th:text="${category.name}"></td>
+        <td><a class="btn btn-success" th:href="@{/categories/edit(id=${category.id})}">Edit</a>
+            <a class="btn btn-warning" th:href="@{/categories/delete(id=${category.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

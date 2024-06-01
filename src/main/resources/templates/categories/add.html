@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="_layout :: head">
+    <title>Add Category</title>
+</head>
+<body>
+<div id="wrapper">
+    <div th:replace="~{_layout :: menu}"></div>
+    <div id="content-wrapper">
+        <div id="content">
+            <div th:replace="~{_layout :: nav-top}"></div>
+            <div class="container-fluid">
+                <h3 class="title">Add Category</h3>
+                <form th:action="@{/categories/add}" th:object="${category}" method="post" >
+                    <div class="form-group">
+                        <label for="tenloai">Tên loại</label>
+                        <input type="text" class="form-control" id="tenloai" placeholder="Tên loại sản phẩm" th:field="*{name}" required>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Thêm"/>
+                    <a class="btn btn-info" th:href="@{/categories/listcategory}">Back</a>
+                </form>
+            </div>
+        </div>
+        <div th:replace="~{_layout :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{_layout :: script_src}"></div>
+</body>
+</html>

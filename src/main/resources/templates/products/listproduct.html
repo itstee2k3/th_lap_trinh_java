@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="_layout :: head">
+    <title>List Product</title>
+</head>
+<body>
+<div id="wrapper">
+    <div th:replace="~{_layout :: menu}"></div>
+    <div id="content-wrapper">
+        <div id="content">
+            <div th:replace="~{_layout :: nav-top}"></div>
+            <div class="container-fluid">
+                <div class="input-group m-1">
+                    <a th:href="@{/products/add}" class="btn btn-primary">Add new Product</a>
+                    <div class="form-outline w-25" data-mdb-input-init>
+                        <input type="search" id="search-input" class="form-control ml-2" placeholder="Nhập tên sản phẩm cần tìm"/>
+                    </div>
+                </div>
+                <div id="content-display">
+                    <table id="myTable" class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Mã sản phẩm</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Gía sản phẩm</th>
+                            <th scope="col">Loại sản phẩm</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="product : ${listProduct}">
+                        <tr>
+                            <td th:text="${product.id}"></td>
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td th:text="${product.category.name}"></td>
+                            <td><a class="btn btn-success" th:href="@{/products/edit(id=${product.id})}">Edit</a>
+                                <a class="btn btn-warning" th:href="@{/products/delete(id=${product.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{_layout :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{_layout :: script_src}"></div>
+<script type="text/javascript">
+    $(document).ready(function (){
+        const searchBar = document.getElementById("search-input");
+        searchBar.addEventListener("change", function (){
+            let value = searchBar.value;
+            $.ajax({
+                url: "/products/searchbook",
+                data: {name: value},
+                type: "GET",
+                success: function (data){
+                    $("#content-display").html(data)
+                },
+                error: function (xhr){
+                    console.log(xhr);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
