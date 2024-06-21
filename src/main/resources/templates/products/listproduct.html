@@ -17,25 +17,32 @@
                     </div>
                 </div>
                 <div id="content-display">
-                    <table id="myTable" class="table">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">Mã sản phẩm</th>
                             <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Hình ảnh</th>
                             <th scope="col">Giá sản phẩm</th>
-                            <th scope="col">Danh mục sản phẩm</th>
+<!--                            <th scope="col">Mô tả</th>-->
+                            <th scope="col">Loại sản phẩm</th>
                             <th scope="col">Nhà sản xuất</th>
                             <th scope="col">Thương hiệu</th>
+                            <th scope="col">Tác vụ</th>
                         </tr>
                         </thead>
                         <tbody th:each="product : ${listProduct}">
                         <tr>
                             <td th:text="${product.id}"></td>
                             <td th:text="${product.name}"></td>
+                            <td>
+                                <img th:src="@{'/imgproduct/' + ${product.mainImage}}" alt="Image" style="width: 100px; height: auto;" >
+                            </td>
                             <td th:text="${product.price}"></td>
-                            <td th:text="${product.category.name}"></td>
-                            <td th:text="${product.manufacturer.name}"></td>
-                            <td th:text="${product.brand.name}"></td>
+<!--                            <td th:text="${product.description}"></td>-->
+                            <td th:text="${product.category != null ? product.category.name : 'Không có'}"></td>
+                            <td th:text="${product.manufacturer != null ? product.manufacturer.name : 'Không có'}"></td>
+                            <td th:text="${product.brand != null ? product.brand.name : 'Không có'}"></td>
                             <td><a class="btn btn-success" th:href="@{/products/edit(id=${product.id})}">Edit</a>
                                 <a class="btn btn-warning" th:href="@{/products/delete(id=${product.id})}">Delete</a>
                             </td>
@@ -55,7 +62,7 @@
         searchBar.addEventListener("change", function (){
             let value = searchBar.value;
             $.ajax({
-                url: "/products/searchbook",
+                url: "/products/searchproduct",
                 data: {name: value},
                 type: "GET",
                 success: function (data){

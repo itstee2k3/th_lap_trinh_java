@@ -11,7 +11,7 @@
             <div th:replace="~{_layout :: nav-top}"></div>
             <div class="container-fluid">
                 <div class="input-group m-1">
-                    <a class="btn btn-primary" th:href="@{/manufacturers/add}">Add new manufacturer</a>
+                    <a class="btn btn-primary" th:href="@{/manufacturers/add}">Thêm mới nhà sản xuất</a>
                     <div class="form-outline w-25" data-mdb-input-init>
                         <input type="search" id="search-input" class="form-control ml-2" placeholder="Nhập tên nhà sản xuất cần tìm"/>
                     </div>
@@ -23,6 +23,7 @@
                             <th scope="col">Mã nhà sản xuất</th>
                             <th scope="col">Tên nhà sản xuất</th>
                             <th scope="col">Địa chỉ</th>
+                            <th scope="col">Tác vụ</th>
                         </tr>
                         </thead>
                         <tbody th:each="manufacturer : ${listManufacturer}">

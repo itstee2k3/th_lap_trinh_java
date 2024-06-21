@@ -11,9 +11,9 @@
             <div th:replace="~{_layout :: nav-top}"></div>
             <div class="container-fluid">
                 <div class="input-group m-1">
-                    <a class="btn btn-primary" th:href="@{/brands/add}">Add new brand</a>
+                    <a class="btn btn-primary" th:href="@{/brands/add}">Thêm mới thương hiệu</a>
                     <div class="form-outline w-25" data-mdb-input-init>
-                        <input type="search" id="search-input" class="form-control ml-2" placeholder="Nhập tên thương hiệu sản phẩm cần tìm"/>
+                        <input type="search" id="search-input" class="form-control ml-2" placeholder="Nhập tên thương hiệu cần tìm"/>
                     </div>
                 </div>
                 <div id="content-display">
@@ -23,6 +23,7 @@
                             <th scope="col">Mã thương hiệu</th>
                             <th scope="col">Tên thương hiệu</th>
                             <th scope="col">Đất nước</th>
+                            <th scope="col">Tác vụ</th>
                         </tr>
                         </thead>
                         <tbody th:each="brand : ${listBrand}">

@@ -14,11 +14,15 @@
                 <form th:action="@{/brands/delete}" th:object="${brand}" method="post" >
                     <div class="form-group">
                         <label for="maloai">Mã thương hiệu</label>
-                        <input type="number" class="form-control" id="maloai" placeholder="Id thương hiệu sản phẩm" th:field="*{id}" required readonly>
+                        <input type="number" class="form-control" id="maloai" placeholder="Mã thương hiệu" th:field="*{id}" required readonly>
                     </div>
                     <div class="form-group">
                         <label for="tenloai">Tên thương hiệu</label>
-                        <input type="text" class="form-control" id="tenloai" placeholder="Tên loại sản phẩm" th:field="*{name}" required readonly>
+                        <input type="text" class="form-control" id="tenloai" placeholder="Tên thương hiêu" th:field="*{name}" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="tendatnuoc">Đất nước</label>
+                        <input type="text" class="form-control" id="tendatnuoc" placeholder="Tên đất nước" th:field="*{country}" required readonly>
                     </div>
                     <input type="submit" class="btn btn-primary" value="Xóa"/>
                     <a class="btn btn-info" th:href="@{/brands/listbrand}">Back</a>

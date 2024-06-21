@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.Normalizer;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Controller
@@ -63,8 +65,21 @@ public class ManufacturerController {
     }
 
     @GetMapping("/searchmanufacturer")
-    public String searchManufacturer(Model model, @RequestParam String name){
-        model.addAttribute("listManufacturer", manufacturerService.getList().stream().filter(manufacturer -> manufacturer.getName().contains(name)).collect(Collectors.toList()));
-        return "manufacturers/searchmanufacturer";
+    public String searchManufacturer(Model model, @RequestParam String name) {
+    String normalizedInputName = normalizeString(name);
+
+    model.addAttribute("listManufacturer", manufacturerService.getList().stream()
+            .filter(manufacturer -> normalizeString(manufacturer.getName()).contains(normalizedInputName))
+            .collect(Collectors.toList()));
+
+    return "manufacturers/searchmanufacturer";
+    }
+
+    private String normalizeString(String input) {
+        if (input == null) {
+            return null;
+        }
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase(Locale.ROOT);
     }
 }

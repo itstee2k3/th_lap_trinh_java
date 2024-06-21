@@ -2,6 +2,9 @@ package com.hutech.buixuanthang.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.Set;
+
+
 @Setter
 @Getter
 @RequiredArgsConstructor
@@ -14,8 +17,17 @@ public class Product {
     private Long id;
 
     private String name;
+
     private double price;
+
     private String description;
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String mainImage;
+
+    @OneToMany(mappedBy = "product")
+    private Set<ProductImages> additionalImages;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

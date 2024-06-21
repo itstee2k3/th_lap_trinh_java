@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.Normalizer;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Controller
@@ -64,8 +66,21 @@ public class CategoryController {
     }
 
     @GetMapping("/searchcategory")
-    public String searchCategory(Model model, @RequestParam String name){
-        model.addAttribute("listCategory", categoryService.getList().stream().filter(category -> category.getName().contains(name)).collect(Collectors.toList()));
+    public String searchCategory(Model model, @RequestParam String name) {
+        String normalizedInputName = normalizeString(name);
+
+        model.addAttribute("listCategory", categoryService.getList().stream()
+                .filter(category -> normalizeString(category.getName()).contains(normalizedInputName))
+                .collect(Collectors.toList()));
+
         return "categories/searchcategory";
+    }
+
+    private String normalizeString(String input) {
+        if (input == null) {
+            return null;
+        }
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase(Locale.ROOT);
     }
 }

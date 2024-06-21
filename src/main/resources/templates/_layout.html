@@ -39,23 +39,31 @@
             Chức năng
         </div>
 
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/productusers/index}">
+                <i class="fas fa-fw fa-magic"></i>
+                <span>Home</span>
+            </a>
+        </li>
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-magic"></i>
-                <span>Sản Phẩm</span>
+                <span>Quản lý</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Quản lý:</h6>
                     <a class="collapse-item" th:href="@{/products/listproduct}">Sản phẩm</a>
+                    <a class="collapse-item" th:href="@{/orders/listorder}">Đơn hàng</a>
                     <a class="collapse-item" th:href="@{/categories/listcategory}">Loại sản phẩm</a>
                     <a class="collapse-item" th:href="@{/brands/listbrand}">Thương hiệu</a>
                     <a class="collapse-item" th:href="@{/manufacturers/listmanufacturer}">Nhà sản xuất</a>
                 </div>
             </div>
         </li>
+
 
         <!-- Nav Item - Utilities Collapse Menu -->
 
