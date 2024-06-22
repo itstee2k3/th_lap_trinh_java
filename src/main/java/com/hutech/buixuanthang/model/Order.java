@@ -32,4 +32,8 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // Thêm trường user để liên kết với người dùng đặt hàng
 }

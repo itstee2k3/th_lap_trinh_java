@@ -31,4 +31,6 @@ public class ManufacturerService {
     public void EditOrAddManufacturer(Manufacturer manufacturer) {
         manufacturerRepository.save(manufacturer);
     }
+
+
 }

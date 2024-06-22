@@ -2,10 +2,12 @@ package com.hutech.buixuanthang.controller;
 
 import com.hutech.buixuanthang.model.CartItem;
 import com.hutech.buixuanthang.model.Order;
-import com.hutech.buixuanthang.model.OrderDetail;
-import com.hutech.buixuanthang.service.CartService;
 import com.hutech.buixuanthang.service.OrderService;
+import com.hutech.buixuanthang.service.CartService;
+import com.hutech.buixuanthang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private UserService userService;
     @GetMapping("/checkout")
     public String checkout() {
         return "/order/checkout";
@@ -38,27 +42,18 @@ public class OrderController {
         return "redirect:/order/confirmation";
     }
 
+
     @GetMapping("")
     public String listOrders(Model model) {
-        List<Order> orders = orderService.getAllOrders();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Long userId = userService.findByUsername(currentUsername).getId();
+
+        List<Order> orders = orderService.getOrdersByUserId(userId);
 
         model.addAttribute("orders", orders);
         return "order/index";
     }
-
-
-//    @GetMapping("/calculateTotal")
-//    public String calculateTotal(Model model) {
-//        List<Order> orders = orderService.getAllOrders();
-//        for (Order order : orders) {
-//            double totalAmount = order.getOrderDetails().stream()
-//                    .mapToDouble(detail -> detail.getQuantity() * detail.getProduct().getPrice())
-//                    .sum();
-//            order.setTotalAmount(totalAmount);
-//        }
-//        model.addAttribute("orders", orders);
-//        return "order/index";
-//    }
 
     @GetMapping("/confirmation")
     public String orderConfirmation(Model model) {

@@ -5,6 +5,8 @@ import com.hutech.buixuanthang.repository.OrderRepository;
 import com.hutech.buixuanthang.repository.OrderDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,8 @@ public class OrderService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private CartService cartService; // Assuming you have a CartService
+    private final UserService userService; // Inject UserService or use another way to get user information
+
     @Transactional
     public Order createOrder(String customerName, String phone, String email, String address, String note, String paymentMethod, List<CartItem> cartItems) {
         Order order = new Order();
@@ -33,6 +37,12 @@ public class OrderService {
 
         double totalAmount = calculateTotalAmount(cartItems);
         order.setTotalAmount(totalAmount);
+
+        // Set the user for the order
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userService.findByUsername(currentUsername);
+        order.setUser(user); // Assuming Order has a setUser(User user) method
 
         order = orderRepository.save(order);
         for (CartItem item : cartItems) {
@@ -53,6 +63,10 @@ public class OrderService {
 
     public Order getOrderById(Long orderId) {
         return orderRepository.findById(orderId).orElse(null);
+    }
+
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
     }
 
     public void confirmOrder(Long id) {
