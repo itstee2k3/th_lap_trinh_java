@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,6 +22,22 @@ import java.util.UUID;
 @Transactional
 public class ProductService {
     private final ProductRepository productRepository;
+
+    public Product addProduct(Product product){
+        return productRepository.save(product);
+    }
+
+    public List<Product> getAllProduct(){
+        return productRepository.findAll();
+    }
+
+    public Optional<Product> getProductById(Long id){
+        return productRepository.findById(id);
+    }
+
+    public void deleteProductById(Long id){
+        productRepository.deleteById(id);
+    }
 
     public List<Product> getList() {
         return productRepository.findAll();

@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static org.apache.catalina.webresources.TomcatURLStreamHandlerFactory.disable;
+
 @Configuration // Đánh dấu lớp này là một lớp cấu hình cho Spring Context.
 @EnableWebSecurity // Kích hoạt tính năng bảo mật web của Spring Security.
 @RequiredArgsConstructor // Lombok tự động tạo constructor có tham số cho tất cả các trường final.
@@ -38,16 +41,20 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/", "/oauth/**", "/register", "/error",
-                                "/products", "/cart", "/cart/**", "/imgproduct/**","/productusers/index/**")
+                                "/products", "/cart", "/cart/**", "/imgproduct/**","/productusers/index/**",
+                                "/api/**")
                         .permitAll() // Cho phép truy cập không cần xác thực.
+
                         .requestMatchers("/products/listproduct/**",
                                 "/orders/listorder/**",
                                 "/categories/listcategory/**",
                                 "/brands/listbrand/**",
-                                "manufacturers/listmanufacturer/**")
+                                "/manufacturers/listmanufacturer/**")
                         .hasAnyAuthority("ADMIN") // Chỉ cho phép ADMIN truy cập.
-                        .requestMatchers("/api/**")
-                        .permitAll() // API mở cho mọi người dùng.
+
+//                        .requestMatchers("/api/**")
+//                        .permitAll() // API mở cho mọi người dùng.
+
                         .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cần xác thực.
                 )
                 .logout(logout -> logout
@@ -81,6 +88,7 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic
                         .realmName("hutech") // Tên miền cho xác thực cơ bản.
                 )
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity, consider enabling it in production
                 .build(); // Xây dựng và trả về chuỗi lọc bảo mật.
     }
 }

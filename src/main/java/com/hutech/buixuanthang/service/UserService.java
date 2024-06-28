@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService{
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
+
     // Gán vai trò mặc định cho người dùng dựa trên tên người dùng.
     public void setDefaultRole(String username) {
         userRepository.findByUsername(username).ifPresentOrElse(
@@ -38,6 +39,7 @@ public class UserService implements UserDetailsService{
                 () -> { throw new UsernameNotFoundException("User not found"); }
         );
     }
+
     // Tải thông tin chi tiết người dùng để xác thực.
     @Override
     public UserDetails loadUserByUsername(String username) throws

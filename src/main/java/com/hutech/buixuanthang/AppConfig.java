@@ -7,7 +7,6 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 @Configuration
 public class AppConfig {
-
     @Bean
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
