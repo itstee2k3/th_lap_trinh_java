@@ -10,8 +10,11 @@
 <div class="container mt-5">
     <h1>Product Management</h1>
     <button onclick="loadProducts()" class="btn btn-primary mb-3">Refresh Products</button>
-    <button onclick="loadCateProducts()" class="btn btn-primary mb-3">Refresh Cate Products</button>
+<!--    <button onclick="loadCateProducts()" class="btn btn-primary mb-3">Refresh Cate Products</button>-->
     <a class="btn btn-secondary mb-3" href="cateproduct.html">Cate Product Manage</a>
+    <a class="btn btn-secondary mb-3" href="brands.html">Brand Product Manage</a>
+    <a class="btn btn-secondary mb-3" href="manufacturers.html">Manu Product Manage</a>
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -20,6 +23,8 @@
             <th>Price</th>
             <th>Description</th>
             <th>Cate</th>
+            <th>Manu</th>
+            <th>Brand</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -40,10 +45,17 @@
             <label for="description" class="form-label">Description:</label>
             <input type="text" class="form-control" id="description">
         </div>
-
         <div class="mb-3">
             <label for="cateProduct" class="form-label">Category:</label>
             <select class="form-control" id="cateProduct"></select>
+        </div>
+        <div class="mb-3">
+            <label for="manuProduct" class="form-label">Manufacturer:</label>
+            <select class="form-control" id="manuProduct"></select>
+        </div>
+        <div class="mb-3">
+            <label for="brandProduct" class="form-label">Brand:</label>
+            <select class="form-control" id="brandProduct"></select>
         </div>
         <button type="submit" class="btn btn-success">Save Product</button>
     </form>
@@ -52,6 +64,8 @@
     $(document).ready(function () {
         loadProducts();
         loadCateProducts();
+        loadManuProducts();
+        loadBrandProducts();
         $("#productForm").on('submit', function (e) {
             e.preventDefault();
             saveProduct();
@@ -66,6 +80,8 @@
                 let productList = '';
                 $.each(products, function (index, product) {
                     const categoryName = product.category ? product.category.name : '';
+                    const manuName = product.manufacturer ? product.manufacturer.name : '';
+                    const brandName = product.brand ? product.brand.name : '';
 
                     productList += `<tr>
                         <td>${product.id}</td>
@@ -73,6 +89,8 @@
                         <td>${product.price}</td>
                         <td>${product.description}</td>
                         <td>${categoryName}</td>
+                        <td>${manuName}</td>
+                        <td>${brandName}</td>
                         <td>
                             <button onclick="editProduct(${product.id})" class="btn btn-warning">Edit</button>
                             <button onclick="deleteProduct(${product.id})" class="btn btn-danger">Delete</button>
@@ -98,6 +116,34 @@
         });
     }
 
+    function loadManuProducts() {
+        $.ajax({
+            url: 'http://localhost:8080/api/manu',
+            type: 'GET',
+            success: function (manuproducts) {
+                let manuProductList = '<option value="">Không có</option>';
+                $.each(manuproducts, function (index, manuproduct) {
+                    manuProductList += `<option value="${manuproduct.id}">${manuproduct.name}</option>`;
+                });
+                $('#manuProduct').html(manuProductList);
+            }
+        });
+    }
+
+    function loadBrandProducts() {
+        $.ajax({
+            url: 'http://localhost:8080/api/brand',
+            type: 'GET',
+            success: function (brandproducts) {
+                let brandProductList = '<option value="">Không có</option>';
+                $.each(brandproducts, function (index, brandproduct) {
+                    brandProductList += `<option value="${brandproduct.id}">${brandproduct.name}</option>`;
+                });
+                $('#brandProduct').html(brandProductList);
+            }
+        });
+    }
+
     function saveProduct() {
         const productData = {
             id: $('#productId').val(),
@@ -106,6 +152,12 @@
             description: $('#description').val(),
             category: {
                 id: $('#cateProduct').val()
+            },
+            manufacturer: {
+                id: $('#manuProduct').val()
+            },
+            brand: {
+                id: $('#brandProduct').val()
             }
         };
         const apiUrl = productData.id ? `http://localhost:8080/api/products/${productData.id}` : 'http://localhost:8080/api/products';
@@ -128,12 +180,17 @@
             type: 'GET',
             success: function (product) {
                 const categoryId = product.category ? product.category.id : '';
+                const manuId = product.manufacturer ? product.manufacturer.id : '';
+                const brandId = product.brand ? product.brand.id : '';
 
                 $('#productId').val(product.id);
                 $('#nameProduct').val(product.name);
                 $('#price').val(product.price);
                 $('#description').val(product.description);
                 $('#cateProduct').val(categoryId);
+                $('#manuProduct').val(manuId);
+                $('#brandProduct').val(brandId);
+
             }
         });
     }
@@ -156,6 +213,9 @@
         $('#price').val('');
         $('#description').val('');
         $('#cateProduct').val('');
+        $('#manuProduct').val('');
+        $('#brandProduct').val('');
+
     }
 </script>
 

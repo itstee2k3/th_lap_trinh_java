@@ -33,6 +33,14 @@ public class ProductApiController {
         if (product.getCategory() != null && product.getCategory().getId() == null) {
             product.setCategory(null); // Set category to null if category id is null
         }
+
+        if (product.getManufacturer() != null && product.getManufacturer().getId() == null) {
+            product.setManufacturer(null); // Set category to null if category id is null
+        }
+
+        if (product.getBrand() != null && product.getBrand().getId() == null) {
+            product.setBrand(null); // Set category to null if category id is null
+        }
         return productService.addProduct(product);
     }
 
@@ -60,6 +68,21 @@ public class ProductApiController {
         if(productDetails.getCategory().getId() == null) {
             product.setCategory(null); // Set category to null if null in request
         }
+
+        if (productDetails.getManufacturer() != null) {
+            product.setManufacturer(productDetails.getManufacturer());
+        }
+        if(productDetails.getManufacturer().getId() == null) {
+            product.setManufacturer(null); // Set category to null if null in request
+        }
+
+        if (productDetails.getBrand() != null) {
+            product.setBrand(productDetails.getBrand());
+        }
+        if(productDetails.getCategory().getId() == null) {
+            product.setCategory(null); // Set category to null if null in request
+        }
+
         final Product updatedProduct = productService.addProduct(product);
         return ResponseEntity.ok(updatedProduct);
     }

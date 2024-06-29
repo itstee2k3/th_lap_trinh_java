@@ -1,5 +1,6 @@
 package com.hutech.buixuanthang.service;
 
+import com.hutech.buixuanthang.model.Brand;
 import com.hutech.buixuanthang.model.Manufacturer;
 import com.hutech.buixuanthang.repository.ManufacturerRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +34,19 @@ public class ManufacturerService {
         manufacturerRepository.save(manufacturer);
     }
 
+    public Manufacturer addManu(Manufacturer manu){
+        return manufacturerRepository.save(manu);
+    }
 
+    public List<Manufacturer> getAllManu(){
+        return manufacturerRepository.findAll();
+    }
+
+    public Optional<Manufacturer> getManuById(Long id){
+        return manufacturerRepository.findById(id);
+    }
+
+    public void deleteManu(Long id){
+        manufacturerRepository.deleteById(id);
+    }
 }
